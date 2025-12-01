@@ -1,0 +1,197 @@
+*{
+    padding:0;
+    margin:0;
+    
+}
+body{
+    background-color: black;
+}
+.main{
+    background-image: url("Images/bg.jpg");
+    height: 100vh;
+    
+}
+.top{
+    display: flex;
+    align-content: center;
+    margin-bottom: 150px;
+}
+.logo img{
+    height: 6vh;
+    margin-top: 20px;
+    margin-left: 150px;
+}
+.right{
+   display: flex;
+   align-items: center;
+   margin-top: 20px;
+   gap: 10px;
+   margin-right: 200px;
+   margin-left: auto;
+}
+.lang{
+    padding: 0px 5px 0px 5px;
+    border-radius: 5px;
+    color: white;
+    border: 1px solid white;
+    text-align: center;
+    align-content: center;
+    width: 8vw;
+    height: 5vh;
+    background-color:rgba(0,0,0,0.35);
+}
+.signin{
+    border-radius: 5px;
+    color: white;
+    border: 1px solid white;
+    background-color: red;
+    text-align: center;
+    align-content: center;
+    width: 6vw;
+    height: 5vh;
+}
+.centre{
+    /* margin-top: 100px; */
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.cen1{
+    color: white;
+    width: 60vw;
+    font-size: 2rem;
+    font-weight:bold;
+    font-size: 70px;
+    text-align: center;
+}
+.cen2{
+    color: white;
+    font-size: 20px;
+    font-weight: bolder;
+    margin-top: 15px;
+}
+.cen3{
+    color: white;
+    font-size: 17.5px;
+    margin-top: 30px;
+}
+
+.email{
+    box-sizing: border-box;
+    margin-top: 15px;
+    display: grid;
+    /* border: 2px solid black; */
+    grid-template-columns: 3fr 1.5fr;
+    width: 50vw;
+    height: 8vh;
+    gap: 10px;
+}
+.id{
+    border: 1px solid white;
+    color: white;
+    background-color:rgba(0,0,0,0.75);
+    border-radius: 5px;
+    padding: 15px;
+    align-content: center;
+}
+input[type=email]{
+    color: white;
+    background-color: aqua;
+}
+.go{
+    display: flex;
+    background-color: red;
+    color: white;
+    font-weight: bolder;
+    border: none;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+}
+.content{
+    color: white;
+    /* padding: 50px; */
+    justify-self: center;
+    /* margin-left: 20px; */
+}
+.trends{
+    width: 80vw;
+}
+.row{
+    display: flex;;
+    flex-direction:row;
+    gap: 15px;
+    /* padding: 30px; */
+    
+}
+.trends .row{
+    overflow:hidden;
+}
+
+.card img{
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    object-fit:contain;
+    height: 250px;
+}
+.join h2{
+    padding: 10px 10px 15px 10px;
+}
+.join p{
+    padding-left: 10px;
+}
+     
+.reasons{
+    color: white;
+    height: 295px;
+   width: 225px;
+   padding: 5px;
+   border-radius: 10px;
+   position: relative;
+   background: linear-gradient(rgb(28, 29, 66),rgb(30, 13, 20));
+}
+.reasons img{
+    height: 8vh;
+    position: absolute;
+    bottom: 10px;
+    right: 5px;
+    ;
+}
+.QA{
+    margin: 40px 0px 20px 0px;
+}
+
+.Q{
+    margin: 10px 0px 0px 0px;
+    height: 10vh;
+    padding-left: 20px;
+    align-content: center;
+    font-size: larger;
+    font-weight: 600;
+    background-color: rgb(32, 32, 32);
+    
+}
+.plus{
+    height: 1px;
+}
+
+.footer{
+    justify-self: center;
+    margin:50px;
+    /* border: 1px solid grey; */
+    color: grey;
+    width: 80vw;
+}
+.fcontent{
+    margin: 40px 0px 0px 0px;
+    /* border: 1px solid grey; */
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto auto auto;
+}
+.fcontent p{
+    margin-bottom: 10px;
+}
