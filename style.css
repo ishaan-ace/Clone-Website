@@ -1,0 +1,125 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background-color: black;
+}
+.nav{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    margin: 5px;
+    display: flex;
+    height: 8vh;
+    /* border: 2px solid grey; */
+    align-items: center;
+    position: sticky;
+    
+}
+.logo{
+    width: 1%;
+    height: auto;
+    margin: 0px 20px 0px 10px;
+}
+.home{
+    margin: 0px 10px 0px 30px;
+}
+.home:hover{
+    transform: scale(1.075);
+
+}
+.search{
+    display: flex;
+    background-color: rgb(38, 38, 38);
+    color: rgb(180, 180, 180);
+    width: 35vw;
+    height: 7vh;
+    border-radius: 32px;
+    align-items: center;
+    box-sizing: border-box;
+    
+}
+.search:hover{
+    background-color: rgb(48, 48, 48) ;
+    transition: 50ms;
+    
+}
+.search img{
+    margin: 0px 10px 0px 10px;
+}
+.psd ul {
+    height: 1.75em;
+    margin-left: 100px;
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    gap: 10px;
+    padding-right: 20px;
+    border-right: 2px solid grey;
+    align-items: center;
+}
+.psd li{
+    color: grey;
+}
+.psd li:hover{
+    transition: 0.15s;
+    transform: scale(1.1);
+    color: whitesmoke;
+} 
+.isl{
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+.isl ul{
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    height: 1.75em;
+    list-style-type: none;
+    gap: 25px;
+}
+.isl img{
+    padding: 5px;
+}
+.isl li{
+   display: flex; 
+   align-items: center;
+    color: grey;
+}
+.isl li:hover{
+    transition: 0.15s;
+    transform: scale(1.1);
+    color: whitesmoke;
+}
+.login{
+    color: black;
+    align-content: center;
+    text-align: center;
+    background-color: whitesmoke;
+    border-radius: 128px;
+    height: 7vh;
+    width: 6em;
+    
+    
+}
+.login:hover{
+    transform: scale(1.075);
+    color: black;
+}
+
+
+.main{
+    display: flex;
+    gap: 10px;
+}
+.left
+{   color: aliceblue;
+    border: 1px solid red;
+    width: 20vw;
+}
+.right{
+    color: aliceblue;
+    border: 1px solid green;
+    width: 80vw;
+}
