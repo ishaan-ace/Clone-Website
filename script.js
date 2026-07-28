@@ -1,21 +1,27 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const container = document.getElementById("cont_cards");
-    const leftBtn = document.querySelector(".left-btn");
-    const rightBtn = document.querySelector(".right-btn");
+    const carousels = document.querySelectorAll(".carousel");
 
-    if (!container || !leftBtn || !rightBtn) return;
+    carousels.forEach((carousel) => {
+        const container = carousel.querySelector(".cont_cards");
+        const leftBtn = carousel.querySelector(".left-btn");
+        const rightBtn = carousel.querySelector(".right-btn");
 
-    leftBtn.addEventListener("click", () => {
-        container.scrollBy({
-            left: -800,
-            behavior: "smooth"
+        if (!container || !leftBtn || !rightBtn) return;
+
+        leftBtn.addEventListener("click", (event) => {
+            event.preventDefault();
+            container.scrollBy({
+                left: -800,
+                behavior: "smooth"
+            });
         });
-    });
 
-    rightBtn.addEventListener("click", () => {
-        container.scrollBy({
-            left: 800,
-            behavior: "smooth"
+        rightBtn.addEventListener("click", (event) => {
+            event.preventDefault();
+            container.scrollBy({
+                left: 800,
+                behavior: "smooth"
+            });
         });
     });
 });

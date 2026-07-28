@@ -171,30 +171,33 @@ body {
 }
 
 .cont_header {
+    overflow: auto;
     padding: 10px;
-    border: 2px solid red;
-    height: 45vh;
+    /* border: 2px solid red; */
     position: relative;
 }
 
 .al_header {
     padding: 5px;
-    border: 2px solid yellow;
+    /* border: 2px solid yellow; */
     display: flex;
     justify-content: space-between;
+}
 
-    p {
-        position: relative;
-        color: rgb(255, 255, 255);
-        align-self: last baseline;
-        margin-right: 30px;
-        font-weight: bold;
-    }
+.al_header p {
+    position: relative;
+    color: rgb(255, 255, 255);
+    align-self: last baseline;
+    margin-right: 30px;
+    font-weight: bold;
+}
 
-    h2 {
+.al_header h2 {
+    color: rgb(255, 255, 255);
+}
 
-        color: rgb(255, 255, 255);
-    }
+.carousel {
+    position: relative;
 }
 
 .cont_cards {
@@ -203,46 +206,55 @@ body {
     overflow-x: auto;
     scroll-behavior: smooth;
     scrollbar-width: none;
+    padding: 10px 0;
+}
 
-    :hover {
-        background-color: rgb(38, 38, 38);
-    }
-    .card {
-        padding: 10px;
-        border-radius: 8px;
-        width: 140px;
-        /* border: 2px solid green; */
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        flex: 0 0 auto;
-    }
+.carousel .cont_cards::-webkit-scrollbar {
+    display: none;
+}
 
-    img {
-        width: 140px;
-        height: 160px;
-        border-radius: 8px;
-        object-fit: cover;
-    }
+.carousel:hover {
+    background-color: rgb(38, 38, 38);
+}
 
-    .info {
-        width: 120px;
-        margin-top: 15px;
-        /* align-self: center; */
+.carousel:not(:hover) > .nav-btn {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
 
-        h4 {
-            margin: 0;
-            color: white;
-        }
+.cont_cards .card {
+    padding: 10px;
+    border-radius: 8px;
+    width: 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 0 0 auto;
+}
 
-        p {
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: small;
-            margin-top: 5px;
-            color: #b3b3b3;
+.cont_cards img {
+    width: 140px;
+    height: 160px;
+    border-radius: 8px;
+    object-fit: cover;
+}
 
-        }
-    }
+.cont_cards .info {
+    width: 120px;
+    margin-top: 15px;
+}
+
+.cont_cards .info h4 {
+    margin: 0;
+    color: white;
+}
+
+.cont_cards .info p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: small;
+    margin-top: 5px;
+    color: #b3b3b3;
 }
 
 .nav-btn {
@@ -267,14 +279,18 @@ body {
     transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 
-.cont_header:hover .nav-btn,
-.nav-btn:hover {
+.carousel:hover > .nav-btn {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
 }
+
+.left-btn {
+    left: 10px;
+}
+
 .right-btn {
-    right: 20px;
+    right: 10px;
 }
 
 .nav-btn:hover {
