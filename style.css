@@ -213,17 +213,18 @@ body {
     display: none;
 }
 
-.carousel:hover {
+.card:hover:hover {
     background-color: rgb(38, 38, 38);
 }
 
-.carousel:not(:hover) > .nav-btn {
+.carousel:not(:hover)>.nav-btn {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
 }
 
 .cont_cards .card {
+    position: relative;
     padding: 10px;
     border-radius: 8px;
     width: 140px;
@@ -256,6 +257,26 @@ body {
     margin-top: 5px;
     color: #b3b3b3;
 }
+.card-play-btn{
+    height: 45px;
+    width: 45px;
+    border-radius: 32px;
+    position:absolute;
+    bottom: 30%;
+    right: 10%;
+    background-color: green;
+    border:1px solid black;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+.card:hover>.card-play-btn{
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: 50ms ease-in;
+}
+
 
 .nav-btn {
     position: absolute;
@@ -279,7 +300,7 @@ body {
     transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 
-.carousel:hover > .nav-btn {
+.carousel:hover>.nav-btn {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
@@ -295,4 +316,93 @@ body {
 
 .nav-btn:hover {
     background: rgba(70, 70, 70, 0.95);
+}
+
+
+
+
+
+.player {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: #181818;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 15px 30px;
+    color: white;
+    border-top: 1px solid #333;
+    z-index: 999;
+}
+.player-column {
+  flex: 1; 
+  display: flex;
+  align-items: center;
+}
+.player-left{
+    justify-content: flex-start;
+}
+.player-centre{
+    justify-content: center;
+    #playPause{
+        font-size: 1.5em;
+        height: 2em;
+        width: 2em;
+        margin: 25px;
+        border-radius: 50%;
+    }
+    #playPause:hover{
+        scale: 1.1;
+        transition: 50ms;
+        cursor: pointer;
+    }
+    #prev{
+        font-size: 1.5em;
+        background-color: transparent;
+        border: transparent;
+        color: grey;
+    }
+    #next{
+        font-size: 1.5em;
+        background-color: transparent;
+        border: transparent;
+        color: grey;
+    }
+
+}
+.player-right{
+    justify-content: flex-end;
+}
+
+.player img {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+}
+
+.songInfo {
+    #title{
+        font-size: larger;
+        margin-bottom: 1%;
+
+    }
+    #artist{
+        font-size:small;
+        font-weight: normal;
+        color: grey;
+    }
+    flex: 1;
+    width: 5em;
+    margin-left: 15px;
+}
+
+#progress {
+    width: 80%;   
+     width: 100%;
+    height: 4px;      
+    cursor: pointer;
+    accent-color: #1DB954; 
 }
