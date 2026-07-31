@@ -51,63 +51,8 @@
                 </div>
                 <div class="carousel">
                     <button class="nav-btn left-btn">&#10094;</button>
-                    <div class="cont_cards">
-                        <div class="card" data-id="1">
-                            <button class="card-play-btn">&#9658;</button>
-                            <img src="Assets/Cover/local train.jpg" alt="" srcset="">
-                            <div class="info">
-                                <h4 class="fontc">Aalas Ka Pedh</h4>
-                                <p>The Local Train</p>
-                            </div>
-                        </div>
-                        <div class="card" data-id="2">
-                            <button class="card-play-btn">&#9658;</button>
-                            <img src="Images/arz kiya hai.jpg" alt="" srcset="">
-                            <div class="info">
-                                <h4 class="fontc">Arz Kiya Hai</h4>
-                                <p>Anuv Jain</p>
-                            </div>
-                        </div>
-                        <div class="card ">
-                            <button class="card-play-btn">&#9658;</button>
-                            <img src="Images/arz kiya hai.jpg" alt="" srcset="">
-                            <div class="info">
-                                <h4 class="fontc">Arz Kiya Hai</h4>
-                                <p>Anuv Jain</p>
-                            </div>
-                        </div>
-                        <div class="card ">
-                            <button class="card-play-btn">&#9658;</button>
-                            <img src="Images/arz kiya hai.jpg" alt="" srcset="">
-                            <div class="info">
-                                <h4 class="fontc">Arz Kiya Hai</h4>
-                                <p>Anuv Jain</p>
-                            </div>
-                        </div>
-                        <div class="card ">
-                            <button class="card-play-btn">&#9658;</button>
-                            <img src="Images/local train.jpg" alt="" srcset="">
-                            <div class="info">
-                                <h4 class="fontc">Aalas Ka Pedh</h4>
-                                <p>The Local Train</p>
-                            </div>
-                        </div>
-                        <div class="card ">
-                            <button class="card-play-btn">&#9658;</button>
-                            <img src="Images/local train.jpg" alt="" srcset="">
-                            <div class="info">
-                                <h4 class="fontc">Aalas Ka Pedh</h4>
-                                <p>The Local Train</p>
-                            </div>
-                        </div>
-                        <div class="card ">
-                            <button class="card-play-btn">&#9658;</button>
-                            <img src="Images/local train.jpg" alt="" srcset="">
-                            <div class="info">
-                                <h4 class="fontc">Aalas Ka Pedh</h4>
-                                <p>The Local Train</p>
-                            </div>
-                        </div>
+                    <div class="cont_cards" id="playlistContainer">
+                        <!-- Cards will be injected dynamically here -->
 
                     </div>
                     <button class="nav-btn right-btn">&#10095;</button>
@@ -121,12 +66,37 @@
                 </div>
                 </div>
                 <div class="player-centre player-column">
-                    <button id="prev">⏮</button>
-                    <button id="playPause">&#9658;</button>
-                    <button id="next">⏭</button>
+                    <div class="player-controls">
+                        <button id="prev">⏮</button>
+                        <button id="playPause">&#9658;</button>
+                        <button id="next">⏭</button>
+                    </div>
+                    <div class="playback-bar">
+                        <span id="currentTime" class="time-text">0:00</span>
+                        <input type="range" id="progress" value="0" min="0" max="100">
+                        <span id="totalTime" class="time-text">0:00</span>
+                    </div>
                 </div>
                 <div class="player-right player-column"> 
-                    <input type="range" id="progress" value="0" min="0" max="100">
+                    <div class="volume-control">
+                        <span class="volume-icon">🔊</span>
+                        <input type="range" id="volume" value="100" min="0" max="100">
+                    </div>
+                </div>
+            </div>
+            <div id="playlistModal" class="modal-overlay">
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <div class="modal-header">
+                        <img id="modalCover" src="" alt="Cover">
+                        <div class="modal-info">
+                            <h2 id="modalTitle">Playlist Title</h2>
+                            <p id="modalArtist">Artist</p>
+                        </div>
+                    </div>
+                    <div class="modal-songs-list" id="modalSongsList">
+                        <!-- Song items will be injected here -->
+                    </div>
                 </div>
             </div>
             <audio id="audioPlayer"></audio>

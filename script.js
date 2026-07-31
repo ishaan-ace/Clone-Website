@@ -32,6 +32,17 @@ const titleElement = document.getElementById("title");
 const artistElement = document.getElementById("artist");
 const playPauseBtn = document.getElementById("playPause");
 const progressBar = document.getElementById("progress");
+const currentTimeEl = document.getElementById("currentTime");
+const totalTimeEl = document.getElementById("totalTime");
+const volumeSlider = document.getElementById("volume");
+
+// Initialize volume
+if (volumeSlider) {
+    audioPlayer.volume = volumeSlider.value / 100;
+    volumeSlider.addEventListener("input", () => {
+        audioPlayer.volume = volumeSlider.value / 100;
+    });
+}
 
 const playlistData = Array.isArray(window.playlists) ? window.playlists : [];
 const songsObj = window.songs || (typeof songs !== "undefined" ? songs : null);
@@ -109,9 +120,18 @@ function playPreviousSong() {
     playSong(currentPlaylist.songs[currentSongIndex], currentPlaylist);
 }
 
+function formatTime(seconds) {
+    if (isNaN(seconds)) return "0:00";
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
+}
+
 function syncProgress() {
     if (!audioPlayer.duration || Number.isNaN(audioPlayer.duration)) return;
     progressBar.value = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+    if (currentTimeEl) currentTimeEl.textContent = formatTime(audioPlayer.currentTime);
+    if (totalTimeEl) totalTimeEl.textContent = formatTime(audioPlayer.duration);
 }
 
 playPauseBtn.addEventListener("click", () => {
@@ -125,6 +145,10 @@ playPauseBtn.addEventListener("click", () => {
 
 audioPlayer.addEventListener("play", () => setPlayerState(true));
 audioPlayer.addEventListener("pause", () => setPlayerState(false));
+audioPlayer.addEventListener("loadedmetadata", () => {
+    if (totalTimeEl) totalTimeEl.textContent = formatTime(audioPlayer.duration);
+    if (currentTimeEl) currentTimeEl.textContent = formatTime(0);
+});
 audioPlayer.addEventListener("ended", () => {
     setPlayerState(false);
     if (currentPlaylist?.songs?.length) {
@@ -139,34 +163,97 @@ progressBar.addEventListener("input", () => {
     audioPlayer.currentTime = (progressBar.value / 100) * audioPlayer.duration;
 });
 
-document.querySelectorAll(".card-play-btn").forEach(button => {
-    button.addEventListener("click", () => {
-        const card = button.closest(".card");
-        const playlistId = Number(card?.dataset.id);
-        const playlist = playlistData.find(item => item.id === playlistId);
-
-        if (playlist?.songs?.length) {
-            playPlaylist(playlist, 0);
-            return;
-        }
-
-        const { songSrc, title, artist, cover } = getCardInfo(card);
-
-        if (!songSrc) {
-            console.error("No audio source found for this card. Add data-song or a valid data-id.");
-            return;
-        }
-
-        currentPlaylist = null;
-        currentSongIndex = -1;
-        audioPlayer.src = songSrc;
-        audioPlayer.load();
-        updateBottomPlayer({ title, artist, cover });
-        audioPlayer.play().catch(error => console.error("Audio playback failed:", error));
-    });
-});
+// Removed static card play button listeners
 
 document.getElementById("prev").addEventListener("click", playPreviousSong);
 document.getElementById("next").addEventListener("click", playNextSong);
 
+// Modal Logic
+const modalOverlay = document.getElementById('playlistModal');
+const closeModalBtn = modalOverlay.querySelector('.close-modal');
 
+if (closeModalBtn) {
+    closeModalBtn.addEventListener('click', () => {
+        modalOverlay.style.display = 'none';
+    });
+}
+
+window.addEventListener('click', (e) => {
+    if (e.target === modalOverlay) {
+        modalOverlay.style.display = 'none';
+    }
+});
+
+function openPlaylistModal(playlist) {
+    if (!playlist) return;
+    
+    document.getElementById('modalCover').src = playlist.cover || '';
+    document.getElementById('modalTitle').textContent = playlist.name || 'Unknown Playlist';
+    document.getElementById('modalArtist').textContent = playlist.artist || 'Various Artists';
+    
+    const songsList = document.getElementById('modalSongsList');
+    songsList.innerHTML = '';
+    
+    if (playlist.songs && playlist.songs.length > 0) {
+        playlist.songs.forEach((song, index) => {
+            const songEl = document.createElement('div');
+            songEl.className = 'modal-song-item';
+            songEl.innerHTML = `
+                <img src="${song.cover || playlist.cover || ''}" alt="">
+                <div class="modal-song-info">
+                    <h4>${song.title}</h4>
+                    <p>${song.artist}</p>
+                </div>
+                <div class="modal-song-duration">${song.duration || ''}</div>
+            `;
+            
+            songEl.addEventListener('click', () => {
+                playPlaylist(playlist, index);
+            });
+            
+            songsList.appendChild(songEl);
+        });
+    } else {
+        songsList.innerHTML = '<p style="color: #b3b3b3; padding: 10px;">No songs in this playlist.</p>';
+    }
+    
+    modalOverlay.style.display = 'flex';
+}
+
+const playlistContainer = document.getElementById("playlistContainer");
+if (playlistContainer && playlistData) {
+    playlistContainer.innerHTML = '';
+    playlistData.forEach(playlist => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.dataset.id = playlist.id;
+        
+        card.innerHTML = `
+            <button class="card-play-btn">&#9658;</button>
+            <img src="${playlist.cover || 'Images/arz kiya hai.jpg'}" alt="${playlist.name}">
+            <div class="info">
+                <h4 class="fontc">${playlist.name}</h4>
+                <p>${playlist.artist}</p>
+            </div>
+        `;
+        
+        card.addEventListener("click", (e) => {
+            if (e.target.closest('.card-play-btn')) return;
+            openPlaylistModal(playlist);
+        });
+        
+        const playBtn = card.querySelector(".card-play-btn");
+        if (playBtn) {
+            playBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                if (playlist?.songs?.length) {
+                    playPlaylist(playlist, 0);
+                } else {
+                    console.error("No audio source found for this playlist.");
+                }
+            });
+        }
+        
+        playlistContainer.appendChild(card);
+    });
+}
