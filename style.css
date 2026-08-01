@@ -56,6 +56,17 @@ body {
     margin: 0px 10px 0px 10px;
 }
 
+#searchInput {
+    background: transparent;
+    border: none;
+    color: white;
+    font-family: inherit;
+    font-size: 14px;
+    width: 100%;
+    outline: none;
+    padding-right: 15px;
+}
+
 .psd ul {
     height: 1.75em;
     margin-left: 100px;
@@ -134,12 +145,115 @@ body {
 
 .left {
     color: aliceblue;
-    border: 1px solid red;
     width: 30vw;
+    background-color: rgb(19, 19, 19);
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
+.library-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    color: #b3b3b3;
+}
 
+.library-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    color: #b3b3b3;
+    transition: 0.2s;
+}
 
+.library-header h3:hover {
+    color: white;
+    cursor: pointer;
+}
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    color: #b3b3b3;
+    font-size: 24px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.icon-btn:hover {
+    color: white;
+    transform: scale(1.1);
+}
+
+.library-list {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.library-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.library-item:hover {
+    background-color: #2a2a2a;
+}
+
+.library-item img {
+    width: 48px;
+    height: 48px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.library-item-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.library-item-info h4 {
+    color: white;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.library-item-info p {
+    color: #b3b3b3;
+    font-size: 12px;
+}
+
+.delete-playlist-btn {
+    background: transparent;
+    border: none;
+    color: #b3b3b3;
+    font-size: 16px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s, color 0.2s, transform 0.2s;
+    padding: 5px;
+}
+
+.library-item:hover .delete-playlist-btn {
+    opacity: 1;
+}
+
+.delete-playlist-btn:hover {
+    color: #ff4d4d;
+    transform: scale(1.1);
+}
 
 .right {
     padding: 10px;
@@ -633,4 +747,131 @@ body {
 .modal-song-duration {
     color: #b3b3b3;
     font-size: 0.9em;
+}
+
+/* Create Playlist Modal Styles */
+.create-playlist-content {
+    max-width: 500px;
+}
+
+.create-playlist-content h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 1.8em;
+    border-bottom: 1px solid #333;
+    padding-bottom: 15px;
+}
+
+.close-create-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #b3b3b3;
+}
+.close-create-modal:hover {
+    color: white;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-size: 0.9em;
+    color: #b3b3b3;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.form-group input[type="text"] {
+    background-color: #333;
+    border: 1px solid #444;
+    color: white;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 1em;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.form-group input[type="text"]:focus {
+    border-color: #1DB954;
+}
+
+.song-selection-list {
+    background-color: #242424;
+    border: 1px solid #333;
+    border-radius: 4px;
+    max-height: 250px;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.song-selection-list::-webkit-scrollbar {
+    width: 6px;
+}
+.song-selection-list::-webkit-scrollbar-thumb {
+    background-color: #555;
+    border-radius: 3px;
+}
+
+.song-checkbox-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.song-checkbox-item:hover {
+    background-color: #333;
+}
+
+.song-checkbox-item input[type="checkbox"] {
+    margin-right: 15px;
+    width: 18px;
+    height: 18px;
+    accent-color: #1DB954;
+    cursor: pointer;
+}
+
+.song-checkbox-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.song-checkbox-info h4 {
+    margin: 0 0 3px 0;
+    font-size: 0.95em;
+    color: white;
+}
+
+.song-checkbox-info p {
+    margin: 0;
+    font-size: 0.8em;
+    color: #b3b3b3;
+}
+
+.primary-btn {
+    background-color: #1DB954;
+    color: black;
+    border: none;
+    padding: 14px;
+    border-radius: 32px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.primary-btn:hover {
+    transform: scale(1.02);
+    background-color: #1ed760;
 }

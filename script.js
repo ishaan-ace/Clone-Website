@@ -221,9 +221,17 @@ function openPlaylistModal(playlist) {
 }
 
 const playlistContainer = document.getElementById("playlistContainer");
-if (playlistContainer && playlistData) {
+
+function renderPlaylists(data) {
+    if (!playlistContainer) return;
     playlistContainer.innerHTML = '';
-    playlistData.forEach(playlist => {
+    
+    if (data.length === 0) {
+        playlistContainer.innerHTML = '<p style="color: #b3b3b3; padding: 20px;">No playlists found.</p>';
+        return;
+    }
+    
+    data.forEach(playlist => {
         const card = document.createElement("div");
         card.className = "card";
         card.dataset.id = playlist.id;
@@ -256,4 +264,191 @@ if (playlistContainer && playlistData) {
         
         playlistContainer.appendChild(card);
     });
+}
+
+// Initial render
+if (playlistData) {
+    renderPlaylists(playlistData);
+}
+
+// Search functionality
+const searchInput = document.getElementById("searchInput");
+if (searchInput && playlistData) {
+    searchInput.addEventListener("input", (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        if (!query) {
+            renderPlaylists(playlistData);
+            return;
+        }
+        
+        const filteredData = playlistData.filter(playlist => {
+            const nameMatch = playlist.name && playlist.name.toLowerCase().includes(query);
+            const artistMatch = playlist.artist && playlist.artist.toLowerCase().includes(query);
+            
+            // Optionally, search through songs in the playlist too
+            const songMatch = playlist.songs && playlist.songs.some(song => 
+                (song.title && song.title.toLowerCase().includes(query)) ||
+                (song.artist && song.artist.toLowerCase().includes(query))
+            );
+            
+            return nameMatch || artistMatch || songMatch;
+        });
+        
+        renderPlaylists(filteredData);
+    });
+}
+
+// Library rendering and Add Playlist logic
+function renderLibrary() {
+    const libraryList = document.getElementById("libraryList");
+    if (!libraryList || !playlistData) return;
+    
+    libraryList.innerHTML = '';
+    const userPlaylists = playlistData.filter(p => p.isUserPlaylist);
+    
+    if (userPlaylists.length === 0) {
+        libraryList.innerHTML = '<p style="color: #b3b3b3; padding: 10px; font-size: 14px; text-align: center;">No custom playlists yet. Click + to create one!</p>';
+        return;
+    }
+    
+    userPlaylists.forEach(playlist => {
+        const item = document.createElement("div");
+        item.className = "library-item";
+        item.dataset.id = playlist.id;
+        
+        item.innerHTML = `
+            <img src="${playlist.cover || 'Images/arz kiya hai.jpg'}" alt="${playlist.name}">
+            <div class="library-item-info" style="flex-grow: 1;">
+                <h4>${playlist.name}</h4>
+                <p>Playlist • ${playlist.artist}</p>
+            </div>
+            <button class="delete-playlist-btn" title="Delete Playlist">🗑</button>
+        `;
+        
+        item.addEventListener("click", () => {
+            openPlaylistModal(playlist);
+        });
+        
+        const deleteBtn = item.querySelector(".delete-playlist-btn");
+        if (deleteBtn) {
+            deleteBtn.addEventListener("click", (e) => {
+                e.stopPropagation(); // Prevent opening the modal
+                if (confirm(`Are you sure you want to delete '${playlist.name}'?`)) {
+                    const index = playlistData.findIndex(p => p.id === playlist.id);
+                    if (index !== -1) {
+                        playlistData.splice(index, 1);
+                        renderPlaylists(playlistData);
+                        renderLibrary();
+                    }
+                }
+            });
+        }
+        
+        libraryList.appendChild(item);
+    });
+}
+
+// Initial library render
+if (playlistData) {
+    renderLibrary();
+}
+
+const addPlaylistBtn = document.getElementById("addPlaylistBtn");
+const createPlaylistModal = document.getElementById("createPlaylistModal");
+const closeCreateModalBtn = document.querySelector(".close-create-modal");
+const songSelectionList = document.getElementById("songSelectionList");
+const confirmCreateBtn = document.getElementById("confirmCreatePlaylist");
+const newPlaylistNameInput = document.getElementById("newPlaylistName");
+
+if (addPlaylistBtn && createPlaylistModal) {
+    // Open the create playlist modal
+    addPlaylistBtn.addEventListener("click", () => {
+        newPlaylistNameInput.value = "";
+        
+        // Populate the song selection list from window.allSongs
+        if (window.allSongs && songSelectionList) {
+            songSelectionList.innerHTML = "";
+            // Use a Set to avoid duplicate songs if they exist in multiple playlists
+            const uniqueSongs = [];
+            const seenSrcs = new Set();
+            
+            window.allSongs.forEach(song => {
+                if (!seenSrcs.has(song.src)) {
+                    seenSrcs.add(song.src);
+                    uniqueSongs.push(song);
+                }
+            });
+            
+            uniqueSongs.forEach((song, index) => {
+                const item = document.createElement("label");
+                item.className = "song-checkbox-item";
+                item.innerHTML = `
+                    <input type="checkbox" value="${index}" data-src="${song.src}">
+                    <div class="song-checkbox-info">
+                        <h4>${song.title}</h4>
+                        <p>${song.artist}</p>
+                    </div>
+                `;
+                // Store the full song object to retrieve later
+                item.querySelector('input').songData = song;
+                songSelectionList.appendChild(item);
+            });
+            
+            if (uniqueSongs.length === 0) {
+                songSelectionList.innerHTML = '<p style="color: #b3b3b3;">No songs available to select.</p>';
+            }
+        }
+        
+        createPlaylistModal.style.display = "flex";
+    });
+
+    // Close modal
+    if (closeCreateModalBtn) {
+        closeCreateModalBtn.addEventListener("click", () => {
+            createPlaylistModal.style.display = "none";
+        });
+    }
+
+    // Close on outside click
+    window.addEventListener("click", (e) => {
+        if (e.target === createPlaylistModal) {
+            createPlaylistModal.style.display = "none";
+        }
+    });
+
+    // Handle Create Playlist Submission
+    if (confirmCreateBtn) {
+        confirmCreateBtn.addEventListener("click", () => {
+            const playlistName = newPlaylistNameInput.value.trim();
+            if (!playlistName) {
+                alert("Please enter a playlist name.");
+                return;
+            }
+
+            // Gather selected songs
+            const selectedCheckboxes = songSelectionList.querySelectorAll('input[type="checkbox"]:checked');
+            const selectedSongs = Array.from(selectedCheckboxes).map(cb => cb.songData);
+
+            const playlistCover = (selectedSongs.length > 0 && selectedSongs[0].cover) ? selectedSongs[0].cover : "Images/arz kiya hai.jpg";
+
+            const newId = playlistData.length > 0 ? Math.max(...playlistData.map(p => p.id)) + 1 : 1;
+            const newPlaylist = {
+                id: newId,
+                name: playlistName,
+                artist: "User",
+                cover: playlistCover,
+                songs: selectedSongs,
+                isUserPlaylist: true
+            };
+            
+            playlistData.push(newPlaylist);
+            
+            // Update UI
+            renderPlaylists(playlistData);
+            renderLibrary();
+            
+            // Close modal
+            createPlaylistModal.style.display = "none";
+        });
+    }
 }

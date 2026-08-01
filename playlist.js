@@ -172,7 +172,7 @@ const playlists = [
                 artist:"Mehul Mahesh",
                 album:"Zulfein",
                 cover:"",
-                src:"Songs\Zulfein - Mehul Mahesh Prod By Dj AYnik (Official Visualizer Video) Latest Hindi Romantic Song 2025.mp3",
+                src:"Songs/Zulfein - Mehul Mahesh Prod By Dj AYnik (Official Visualizer Video) Latest Hindi Romantic Song 2025.mp3",
                 duration:"3:19"
             }
         ] 

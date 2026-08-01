@@ -17,7 +17,7 @@
                 alt="spotify" /></div>
         <div class="home"><img width="45" height="45" src="Images/icons8-home.svg" alt="" srcset=""></div>
         <div class="search"> <img src="Images/search.svg" alt="" srcset="">
-            <p>What do you want to play?</p>
+            <input type="text" id="searchInput" placeholder="What do you want to play?">
         </div>
         <div class="psd">
             <ul>
@@ -35,7 +35,15 @@
         </div>
     </div>
     <div class="main">
-        <div class="left"> savdjasd</div>
+        <div class="left">
+            <div class="library-header">
+                <h3><img width="24" height="24" src="Images/icons8-home.svg" alt="" style="filter: invert(1);"> Your Library</h3>
+                <button id="addPlaylistBtn" class="icon-btn">+</button>
+            </div>
+            <div class="library-list" id="libraryList">
+                <!-- User playlists will appear here -->
+            </div>
+        </div>
         <div class="right">
             <div class="cat">
                 <ul>
@@ -99,6 +107,25 @@
                     </div>
                 </div>
             </div>
+            
+            <div id="createPlaylistModal" class="modal-overlay">
+                <div class="modal-content create-playlist-content">
+                    <span class="close-create-modal">&times;</span>
+                    <h2>Create New Playlist</h2>
+                    <div class="form-group">
+                        <label for="newPlaylistName">Playlist Name</label>
+                        <input type="text" id="newPlaylistName" placeholder="My Awesome Playlist" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label>Select Songs</label>
+                        <div class="song-selection-list" id="songSelectionList">
+                            <!-- Song checkboxes will be injected here -->
+                        </div>
+                    </div>
+                    <button id="confirmCreatePlaylist" class="primary-btn">Create Playlist</button>
+                </div>
+            </div>
+            
             <audio id="audioPlayer"></audio>
     </div>
 </body>
